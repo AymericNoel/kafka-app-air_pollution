@@ -6,7 +6,7 @@
 ***
 +  AQI (Air quality Index) per city. Here is the indice definition :
 <br>
-    <img src="./pics/AQL.PNG" width="250">
+    <img src="./pics/AQL.PNG" width="400">
 
 ## Available topics
 ***
