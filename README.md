@@ -19,7 +19,11 @@
 
 +  If you are on docker toolbox (generally on windows), don't use localhost:9092 as broker but 192.168.99.100:9092 in [KafkaConfig.java](./src/main/java/config/KafkaConfig.java) and same in [docker-compose file](./src/main/docker-compose.yml).
 
-+  Don't forget to put your api key in [KafkaConfig.java](./src/main/java/config/KafkaConfig.java). You can get one on https://aqicn.org/data-platform/token/#/
++  You have to create *.env* file in [src/main/java](./src/main/java) and put your api key.
+    > API_KEY=xxxxxxxxxx 
+
+
+   If you don't have api key, You can get one on https://aqicn.org/data-platform/token/#/
 
 +  To launch the application, run docker-compose up. 
 

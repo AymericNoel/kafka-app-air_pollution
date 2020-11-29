@@ -19,21 +19,18 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
-
+import io.github.cdimascio.dotenv.Dotenv;
 import javax.net.ssl.SSLContext;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static config.KafkaConfig.API_KEY;
-
-
 class Collector {
-
-    private static final String OPEN_DATA_URL_PARIS = "https://api.waqi.info/feed/paris/?token=" + API_KEY;
-    private static final String OPEN_DATA_URL_BEIJING = "https://api.waqi.info/feed/beijing/?token=" + API_KEY;
-    private static final String OPEN_DATA_URL_NEWYORK = "https://api.waqi.info/feed/newyork/?token=" + API_KEY;
-    private static final String OPEN_DATA_URL_LONDON = "https://api.waqi.info/feed/london/?token=" + API_KEY;
+    private static String API_KEY; 
+    private static final String OPEN_DATA_URL_PARIS = "https://api.waqi.info/feed/paris/?token=" ;
+    private static final String OPEN_DATA_URL_BEIJING = "https://api.waqi.info/feed/beijing/?token=" ;
+    private static final String OPEN_DATA_URL_NEWYORK = "https://api.waqi.info/feed/newyork/?token=" ;
+    private static final String OPEN_DATA_URL_LONDON = "https://api.waqi.info/feed/london/?token=" ;
 
 
     private static final List<String> ALL_URL = Arrays.asList(OPEN_DATA_URL_BEIJING, OPEN_DATA_URL_PARIS, OPEN_DATA_URL_NEWYORK, OPEN_DATA_URL_LONDON);
@@ -44,6 +41,8 @@ class Collector {
 
     Collector(KafkaPublisher publisher) {
         this.publisher = publisher;
+        Dotenv dotenv = Dotenv.load();
+        API_KEY = dotenv.get("API_KEY");
     }
 
     void collect() {
@@ -69,6 +68,7 @@ class Collector {
                     new HttpComponentsClientHttpRequestFactory(httpClient);
                     
             for (String url : ALL_URL) {
+                url=url+API_KEY;
                 ResponseEntity<String> response =
                     new RestTemplate(requestFactory).exchange(url, HttpMethod.GET, null, String.class);    
 
