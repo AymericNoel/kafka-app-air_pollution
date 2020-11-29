@@ -5,6 +5,7 @@
 ## Available streams
 ***
 +  AQI (Air quality Index) per city. Here is the indice definition :
+
     <img src="./pics/AQL.PNG" width="250">
 
 ## Available topics
