@@ -5,7 +5,7 @@
 ## Available streams
 ***
 +  AQI (Air quality Index) per city. Here is the indice definition :
-    ![Air quality indices](./pics/AQL.PNG)
+    ![Air quality indices](./pics/AQL.PNG =250x)
 
 ## Available topics
 ***
