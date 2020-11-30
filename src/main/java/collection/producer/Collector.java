@@ -31,9 +31,11 @@ class Collector {
     private static final String OPEN_DATA_URL_BEIJING = "https://api.waqi.info/feed/beijing/?token=" ;
     private static final String OPEN_DATA_URL_NEWYORK = "https://api.waqi.info/feed/newyork/?token=" ;
     private static final String OPEN_DATA_URL_LONDON = "https://api.waqi.info/feed/london/?token=" ;
+    private static final String OPEN_DATA_URL_NEWDELHI = "https://api.waqi.info/feed/new-delhi/?token=" ;
+    
 
 
-    private static final List<String> ALL_URL = Arrays.asList(OPEN_DATA_URL_BEIJING, OPEN_DATA_URL_PARIS, OPEN_DATA_URL_NEWYORK, OPEN_DATA_URL_LONDON);
+    private static final List<String> ALL_URL = Arrays.asList(OPEN_DATA_URL_BEIJING, OPEN_DATA_URL_NEWDELHI, OPEN_DATA_URL_PARIS, OPEN_DATA_URL_NEWYORK, OPEN_DATA_URL_LONDON);
 
     private static final Logger logger = LoggerFactory.getLogger(Collector.class);
 
