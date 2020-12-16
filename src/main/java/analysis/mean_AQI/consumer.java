@@ -1,4 +1,4 @@
-package analysis.pollution_per_city;
+package analysis.mean_AQI;
 
 
 import org.apache.kafka.clients.consumer.*;
@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static analysis.pollution_per_city.producer.STREAM_APP_1_OUT;
+import static analysis.mean_AQI.producer.STREAM_APP_2_OUT;
 import static config.KafkaConfig.BOOTSTRAP_SERVERS;
 import static config.KafkaConfig.GROUP_ID;;
 
@@ -26,8 +26,8 @@ class consumer {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
 
-        final Consumer<String, Double> consumer = new KafkaConsumer<>(config);
-        consumer.subscribe(Collections.singletonList(STREAM_APP_1_OUT));
+        final Consumer<String, Long> consumer = new KafkaConsumer<>(config);
+        consumer.subscribe(Collections.singletonList(STREAM_APP_2_OUT));
 
         final AtomicInteger counter = new AtomicInteger(0);
 
@@ -37,8 +37,8 @@ class consumer {
         }));
 
         while (true) {
-            final ConsumerRecords<String, Double> consumerRecords = consumer.poll(Duration.ofMillis(1000));
-            for (ConsumerRecord<String, Double> consumerRecord : consumerRecords) {
+            final ConsumerRecords<String, Long> consumerRecords = consumer.poll(Duration.ofMillis(1000));
+            for (ConsumerRecord<String, Long> consumerRecord : consumerRecords) {
                 counter.incrementAndGet();
                 System.out.println(consumerRecord);
             }

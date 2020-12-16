@@ -15,9 +15,9 @@ import java.util.Properties;
 import static config.KafkaConfig.RAW_TOPIC_NAME;
 import static config.KafkaConfig.BOOTSTRAP_SERVERS;
 
-class producer {
+public class producer {
 
-    static final String STREAM_APP_1_OUT = "pollution-per-city";
+    public static final String STREAM_APP_1_OUT = "pollution-per-city";
     private static final String POLLUTION_STREAM_APPLICATION = "pollutionCity-stream-application";
     private static final String STREAM_APP_1_INPUT = RAW_TOPIC_NAME;
 
@@ -49,14 +49,15 @@ class producer {
     private Topology createTopology() {
 
         Serde<String> stringSerde = Serdes.String();
+        Serde<Double> doubleSerde = Serdes.Double();
         StreamsBuilder builder = new StreamsBuilder();
 
         KStream<String, String> stats = builder.stream(STREAM_APP_1_INPUT);
-        KStream<String, String> airQualityStream = stats
+        KStream<String, Double> airQualityStream = stats
                 .selectKey((key, jsonRecordString) -> extract_city(jsonRecordString))
                 .map((key, value) -> new KeyValue<>(key, extract_pollution_meter(value)));
 
-        airQualityStream.to(STREAM_APP_1_OUT, Produced.with(stringSerde, stringSerde));
+        airQualityStream.to(STREAM_APP_1_OUT, Produced.with(stringSerde, doubleSerde));
 
         return builder.build();
     }
@@ -76,7 +77,7 @@ class producer {
         return cityName.asText();
     }
 
-    private String extract_pollution_meter(String jsonRecordString) {
+    private Double extract_pollution_meter(String jsonRecordString) {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = null;
         try {
@@ -86,6 +87,22 @@ class producer {
         }
         JsonNode airQualityInfo = jsonNode.get("aqi");
 
-        return airQualityInfo.asText();
+        return Double.parseDouble(airQualityInfo.asText());
     }
 }
+
+
+// private Long extract_nbfreeedock(String jsonRecordString) {
+//     ObjectMapper mapper = new ObjectMapper();
+//     JsonNode jsonNode = null;
+//     try {
+//         jsonNode = mapper.readTree(jsonRecordString);
+//     } catch (IOException e) {
+//         e.printStackTrace();
+//     }
+//     JsonNode fieldsMode = jsonNode.get("fields");
+
+//     JsonNode nbfreeedockNode = fieldsMode.get("numbikesavailable");
+
+//     return Long.parseLong(nbfreeedockNode.asText());
+// }
