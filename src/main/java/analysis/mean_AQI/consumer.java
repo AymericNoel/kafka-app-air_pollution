@@ -1,21 +1,20 @@
 package analysis.mean_AQI;
 
-
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.streams.kstream.WindowedSerdes;
 
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static analysis.mean_AQI.producer.STREAM_APP_2_OUT;
 import static config.KafkaConfig.BOOTSTRAP_SERVERS;
-import static config.KafkaConfig.GROUP_ID;;
+import static analysis.mean_AQI.producer.STREAM_APP_2_OUT;
+import static config.KafkaConfig.GROUP_ID;
 
-
-class consumer {
+public class consumer {
 
     public static void main(String[] args) {
 
@@ -26,7 +25,7 @@ class consumer {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
 
-        final Consumer<String, Long> consumer = new KafkaConsumer<>(config);
+        final Consumer<WindowedSerdes.TimeWindowedSerde<String>, Double> consumer = new KafkaConsumer<>(config);
         consumer.subscribe(Collections.singletonList(STREAM_APP_2_OUT));
 
         final AtomicInteger counter = new AtomicInteger(0);
@@ -37,11 +36,12 @@ class consumer {
         }));
 
         while (true) {
-            final ConsumerRecords<String, Long> consumerRecords = consumer.poll(Duration.ofMillis(1000));
-            for (ConsumerRecord<String, Long> consumerRecord : consumerRecords) {
+            final ConsumerRecords<WindowedSerdes.TimeWindowedSerde<String>, Double> consumerRecords = consumer.poll(Duration.ofMillis(1000));
+            for (ConsumerRecord<WindowedSerdes.TimeWindowedSerde<String>, Double> consumerRecord : consumerRecords) {
                 counter.incrementAndGet();
                 System.out.println(consumerRecord);
             }
         }
     }
+
 }

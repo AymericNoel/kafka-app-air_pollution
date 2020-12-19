@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static analysis.pollution_per_city.producer.STREAM_APP_1_OUT;
 import static config.KafkaConfig.BOOTSTRAP_SERVERS;
-import static config.KafkaConfig.GROUP_ID;;
+import static config.KafkaConfig.GROUP_ID;
 
 
 class consumer {
