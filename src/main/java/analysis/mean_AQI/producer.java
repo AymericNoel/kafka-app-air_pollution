@@ -34,7 +34,7 @@ class producer {
         config.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS.get(0));
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         config.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
-        config.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+        config.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.Double().getClass());
 
         producer airQualityApp = new producer();
 
@@ -68,7 +68,7 @@ class producer {
                     aggValue.sum = aggValue.sum + newValue;
                     return aggValue;
                 }, Materialized.<String, CountAndSum, WindowStore<Bytes, byte[]>>as("time-windowed-aggregated-stream-store")
-                        .withValueSerde(CustomSerdes.CountAndSum())); // need to implement custom serde
+                        .withValueSerde(CustomSerdes.CountAndSum())); 
 
         KTable<Windowed<String>, Double> Average = timeWindowedAggregatedStream
                 .mapValues(value -> value.sum / value.count);
@@ -87,6 +87,8 @@ class CountAndSum {
         count = v1;
         sum = v2;
     }
+
+    CountAndSum(){}//default constructor for serialization only
 }
 
 class JsonSerializer<T> implements Serializer<T> {
@@ -167,5 +169,4 @@ final class CustomSerdes {
     public static Serde<CountAndSum> CountAndSum() {
         return new CustomSerdes.CountAndSumSerde();
     }
-
 }

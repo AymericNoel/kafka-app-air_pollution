@@ -8,10 +8,13 @@
 <br>
     <img src="./pics/AQL.PNG" width="400">
 
++ Average AQI per city on a 30 minutes window
+
 ## Available topics
 ***
 +  *pollution-stats-raw* : raw datas
 +  *pollution-per-city* : air quality index by city
++  *mean_AQI* : average air quality index on a 30 minutes window
 
 ## Running the application
 ***
@@ -31,9 +34,9 @@
 
 +  If you want to check the raw datas, run [Kafka consumer](./src/main/java/collection/consumer/RawDataConsumerUtils.java) if you want to display datas in real time in console. Or you can see them on the UI.
 
-+  If you want to get streams, other than the raw one, run producers in [analysis](./src/main/java/analysis) folder. You can check streams on the UI or running the corresponding consumers to display streams in console.
++  If you want to get streams, other than the raw one, run producers in [analysis](./src/main/java/analysis) folder. You can check streams on the UI or running the corresponding consumers to display streams in console. I recommend to run the consumers from console because UI doesn't display well some double or long values...
 
-+  The UI is accessible on *192.168.99.100:3030* or *localhost:3030*.
++  The UI is accessible on *192.168.99.100:3030* or *localhost:3030*. Depends on your configuration.
 
 
 

@@ -90,19 +90,3 @@ public class producer {
         return Double.parseDouble(airQualityInfo.asText());
     }
 }
-
-
-// private Long extract_nbfreeedock(String jsonRecordString) {
-//     ObjectMapper mapper = new ObjectMapper();
-//     JsonNode jsonNode = null;
-//     try {
-//         jsonNode = mapper.readTree(jsonRecordString);
-//     } catch (IOException e) {
-//         e.printStackTrace();
-//     }
-//     JsonNode fieldsMode = jsonNode.get("fields");
-
-//     JsonNode nbfreeedockNode = fieldsMode.get("numbikesavailable");
-
-//     return Long.parseLong(nbfreeedockNode.asText());
-// }
