@@ -37,6 +37,3 @@
 +  If you want to get streams, other than the raw one, run producers in [analysis](./src/main/java/analysis) folder. You can check streams on the UI or running the corresponding consumers to display streams in console. I recommend to run the consumers from console because UI doesn't display well some double or long values...
 
 +  The UI is accessible on *192.168.99.100:3030* or *localhost:3030*. Depends on your configuration.
-
-
-
